@@ -18,17 +18,14 @@ conexion = soc.socket(soc.AF_INET,soc.SOCK_STREAM)
 if Parsers.host and Parsers.port:
     try:
         serv = conexion.connect_ex((Parsers.host,Parsers.port))
+        print(f"Conexion del host:{Parsers.host}, Puerto en:{Parsers.port}")
         while True:
-            if serv == 0:
-                print(f"Conexion del host:{Parsers.host}, Puerto en:{Parsers.port}")
-                msg = conexion.recv(4096).decode('utf-8')
-                if msg.lower()=="exit":
-                    print("Conexion Terminada")
-                    break
-                print(msg)
+            msg = conexion.recv(4096).decode('utf-8')
+            if msg.lower()=="exit":
+                print("Conexion Terminada")
+                break
+            print(msg)
 
-            else:
-                print("Error al conectarse")
     #Manejo de errores
     except soc.timeout:
         print("Conexion agotada")
